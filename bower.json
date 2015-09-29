@@ -1,6 +1,6 @@
 {
-  "name": "pixid-google-maps",
-  "version": "0.0.1",
+  "name": "angular-pixid-google-maps",
+  "version": "0.0.2",
   "authors": [
     "Andrew Bennett <andrew@pixid.com>"
   ],
@@ -17,7 +17,7 @@
     "tests"
   ],
   "main": [
-    "dist/index.module.js"
+    "dist/pixid-google-maps.js"
   ],
   "dependencies": {},
   "devDependencies": {

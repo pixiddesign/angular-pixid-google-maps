@@ -1,6 +1,6 @@
 {
-  "name": "pixid-redactor",
-  "version": "0.0.1",
+  "name": "angular-pixid-redactor",
+  "version": "0.0.2",
   "author": "Andrew Bennett <andrew@pixid.com>",
   "license": "MPL2",
   "private": true,
