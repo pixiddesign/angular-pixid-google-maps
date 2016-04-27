@@ -1,6 +1,6 @@
 {
-  "name": "angular-pixid-redactor",
-  "version": "0.0.2",
+  "name": "angular-pixid-google-maps",
+  "version": "0.0.3",
   "author": "Andrew Bennett <andrew@pixid.com>",
   "license": "MPL2",
   "private": true,
@@ -8,6 +8,7 @@
   "scripts": {
     "test": "gulp test"
   },
+  "main": "dist/pixid-google-maps.js",
   "devDependencies": {
     "babel-core": "~5.8.9",
     "babel-loader": "~5.3.2",
