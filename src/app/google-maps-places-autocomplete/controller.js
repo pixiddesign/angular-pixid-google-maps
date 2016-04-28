@@ -141,3 +141,5 @@ export class GoogleMapsPlacesAutocompleteController {
     });
   }
 }
+
+export default GoogleMapsPlacesAutocompleteController;

@@ -4,7 +4,7 @@ export class GoogleMapsAPIProvider {
 
     const googleMapsAPIProvider = this;
 
-    googleMapsAPIProvider.config = {
+    const options = googleMapsAPIProvider.options = {
       url: 'https://maps.googleapis.com/maps/api/js',
       params: {
         language: 'en',
@@ -15,15 +15,21 @@ export class GoogleMapsAPIProvider {
 
     this.$get = function ($httpParamSerializer, $q, $window) {
 
+      let callbackCounter = $window.Math.round($window.Math.random() * 1000);
+
+      function withDefaults (config = {}) {
+        const opts = angular.copy(config);
+        opts.params = angular.extend({}, options.params, opts.params || {});
+        opts.url = config.url || options.url;
+        return opts;
+      }
+
       class GoogleMapsAPI {
-        constructor () {
-          this.config  = googleMapsAPIProvider.config;
-          this.counter = $window.Math.round($window.Math.random() * 1000);
-        }
+        constructor () {}
 
         getURL (config = {}) {
-          let { params, url } = this.withDefaults(config);
-          let separator       = (url.indexOf('?') === -1) ? '?' : '&';
+          const { params, url } = withDefaults(config);
+          const separator       = (url.indexOf('?') === -1) ? '?' : '&';
           return `${url}${separator}${$httpParamSerializer(params)}`;
         }
 
@@ -38,7 +44,7 @@ export class GoogleMapsAPIProvider {
             this.includeScript.remove();
             delete this.includeScript;
           }
-          let promise = this.includePromise = $q((resolve, reject) => {
+          const promise = this.includePromise = $q((resolve, reject) => {
             let script = this.includeScript = $window.document.createElement('script');
             script.onerror = reject;
             script.onload = resolve;
@@ -73,35 +79,29 @@ export class GoogleMapsAPIProvider {
         }
 
         load (config = {}) {
-          config = this.withDefaults(config);
-          if (this.isLoaded(config.params.libraries)) {
+          const opts = withDefaults(config);
+          if (this.isLoaded(opts.params.libraries)) {
             return $q.when($window.google.maps);
           } else if ($window.navigator.connection && $window.Connection && $window.navigator.connection.type === $window.Connection.NONE) {
             return $q((resolve, reject) => {
               let online = () => {
                 $window.document.removeEventListener('online', online);
-                this.load(config).then(resolve).catch(reject);
+                this.load(opts).then(resolve).catch(reject);
               };
               $window.document.addEventListener('online', online);
             });
           }
           return $q((resolve, reject) => {
-            let callback = config.params.callback = `pxGoogleMaps${this.counter++}`;
+            let callback = opts.params.callback = `pxGoogleMaps${callbackCounter++}`;
             $window[callback] = () => {
               delete $window[callback];
               resolve($window.google.maps);
             };
-            this.include(config).catch((rejection) => {
+            this.include(opts).catch((rejection) => {
               delete $window[callback];
               reject(rejection);
             });
           });
-        }
-
-        withDefaults (config = {}) {
-          config.params = angular.extend({}, this.config.params, config.params || {});
-          config.url    = config.url || this.config.url;
-          return config;
         }
       }
 
@@ -111,11 +111,13 @@ export class GoogleMapsAPIProvider {
     this.$get.$inject = ['$httpParamSerializer', '$q', '$window'];
   }
 
-  init (options = {}) {
+  config (options = {}) {
     if (angular.isObject(options.params)) {
-      this.config.params = angular.extend(angular.copy(this.config.params), options.params);
+      this.options.params = angular.extend(angular.copy(this.options.params), options.params);
       delete options.params;
     }
-    this.config = angular.extend(angular.copy(this.config), options);
+    this.options = angular.extend(angular.copy(this.options), options);
   }
 }
+
+export default GoogleMapsAPIProvider;

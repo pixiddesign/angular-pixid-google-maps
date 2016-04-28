@@ -1,4 +1,4 @@
-import { GoogleMapsPlacesAutocompleteController } from './google-maps-places-autocomplete.controller';
+import GoogleMapsPlacesAutocompleteController from './controller';
 
 export function GoogleMapsPlacesAutocompleteDirective (pxGoogleMapsAPI) {
   'ngInject';
@@ -35,3 +35,5 @@ export function GoogleMapsPlacesAutocompleteDirective (pxGoogleMapsAPI) {
     }
   };
 }
+
+export default GoogleMapsPlacesAutocompleteDirective;
