@@ -1,6 +1,6 @@
 {
   "name": "angular-pixid-google-maps",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Angular 1.x Google Maps library by Pixid Design",
   "main": "./lib/main.js",
   "scripts": {
@@ -18,7 +18,6 @@
     "preclean:install": "npm run clean",
     "preclean:start": "npm run clean",
     "precompile": "npm run clean:lib",
-    "prepublish": "npm run compile",
     "server": "npm run server:dev",
     "server:dev": "webpack-dev-server --config config/webpack.dev.js --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base src/",
     "server:dev:hmr": "npm run server:dev -- --hot",
