@@ -1,7 +1,6 @@
 {
   "name": "angular-pixid-google-maps",
-  "version": "0.0.3",
-  "private": true,
+  "version": "1.0.0",
   "description": "Angular 1.x Google Maps library by Pixid Design",
   "main": "./lib/main.js",
   "scripts": {
